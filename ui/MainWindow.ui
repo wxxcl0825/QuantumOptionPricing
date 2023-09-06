@@ -237,14 +237,7 @@ QComboBox::drop-down {
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="taskwidget" native="true">
-           <property name="font">
-            <font>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-          </widget>
+          <layout class="QGridLayout" name="tasklayout"/>
          </item>
         </layout>
        </widget>
@@ -259,7 +252,7 @@ QComboBox::drop-down {
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,5">
+          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,1">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
@@ -317,7 +310,7 @@ font: 10pt &quot;Hitmo2.0&quot;;</string>
             </layout>
            </item>
            <item>
-            <widget class="QWidget" name="classicwidget" native="true"/>
+            <layout class="QGridLayout" name="classiclayout"/>
            </item>
           </layout>
          </widget>
@@ -330,7 +323,7 @@ font: 10pt &quot;Hitmo2.0&quot;;</string>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_6" stretch="1,5">
+          <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,1">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
@@ -388,7 +381,7 @@ font: 10pt &quot;Hitmo2.0&quot;;</string>
             </layout>
            </item>
            <item>
-            <widget class="QWidget" name="quantumwidget" native="true"/>
+            <layout class="QGridLayout" name="quantumlayout"/>
            </item>
           </layout>
          </widget>

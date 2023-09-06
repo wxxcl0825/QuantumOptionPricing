@@ -1,8 +1,10 @@
 <RCC>
     <qresource prefix="images">
         <file>images/logo.png</file>
+        <file>images/item.png</file>
     </qresource>
     <qresource prefix="fonts">
-        <file>fonts/quantum.otf</file>
+        <file>fonts/rostov.ttf</file>
+        <file>fonts/hitmo.ttf</file>
     </qresource>
 </RCC>

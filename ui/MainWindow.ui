@@ -13,88 +13,121 @@
   <property name="windowTitle">
    <string>QPtion</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../assets/assets.qrc">
+    <normaloff>:/images/images/logo.png</normaloff>:/images/images/logo.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255,255,255)</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,4">
+   <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,4">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="logo">
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap resource="../assets/assets.qrc">:/images/images/logo.png</pixmap>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="title">
-            <property name="styleSheet">
-             <string notr="true">font-family: &quot;:/fonts/fonts/quantum.otf&quot;;</string>
-            </property>
-            <property name="text">
-             <string>QPtion</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::PlainText</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="slogan">
-          <property name="text">
-           <string>Price your option using our latest quantum technology.</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-     </layout>
+     <widget class="QFrame" name="frame">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(24, 90, 119);
+border: 1px solid rgb(24, 90, 119);
+border-radius: 15px;</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="logo">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../assets/assets.qrc">:/images/images/logo.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="title">
+             <property name="font">
+              <font>
+               <family>Rostov</family>
+               <pointsize>18</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font: 18pt &quot;Rostov&quot;;
+color: rgb(255, 255, 255)</string>
+             </property>
+             <property name="text">
+              <string>QPtion</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="slogan">
+           <property name="font">
+            <font>
+             <family>Hitmo2.0</family>
+             <pointsize>9</pointsize>
+             <kerning>false</kerning>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgba(255, 255, 255, 180);
+font: 9pt &quot;Hitmo2.0&quot;;</string>
+           </property>
+           <property name="text">
+            <string>   Price your option using our latest quantum technology.</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,3">
@@ -108,10 +141,110 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QComboBox" name="combo"/>
+          <widget class="QComboBox" name="combo">
+           <property name="font">
+            <font>
+             <family>Hitmo2.0</family>
+             <pointsize>10</pointsize>
+             <kerning>false</kerning>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QComboBox {
+    border: 1px groove gray;
+    border-radius: 13px;
+    padding: 1px 18px 1px 3px;
+    color: gray;
+    background: rgb(240, 245, 247);
+	font: 10pt &quot;Hitmo2.0&quot;;
+}
+
+QComboBox::drop-down {
+	border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
+}
+</string>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>European Call</string>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>European Call</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/images/images/item.png</normaloff>:/images/images/item.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>European Put</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/images/images/item.png</normaloff>:/images/images/item.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>American Call</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/images/images/item.png</normaloff>:/images/images/item.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>American Put</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/images/images/item.png</normaloff>:/images/images/item.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Asian Call</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/images/images/item.png</normaloff>:/images/images/item.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Asian Put</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../assets/assets.qrc">
+              <normaloff>:/images/images/item.png</normaloff>:/images/images/item.png</iconset>
+            </property>
+           </item>
+          </widget>
          </item>
          <item>
-          <widget class="QWidget" name="taskwidget" native="true"/>
+          <widget class="QWidget" name="taskwidget" native="true">
+           <property name="font">
+            <font>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -131,6 +264,17 @@
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
               <widget class="QLabel" name="classictabtitle">
+               <property name="font">
+                <font>
+                 <family>Hitmo2.0</family>
+                 <pointsize>12</pointsize>
+                 <kerning>false</kerning>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(28, 28, 49);
+font: 12pt &quot;Hitmo2.0&quot;;</string>
+               </property>
                <property name="text">
                 <string>Classic</string>
                </property>
@@ -151,8 +295,22 @@
              </item>
              <item>
               <widget class="QPushButton" name="classicbtn">
+               <property name="font">
+                <font>
+                 <family>Hitmo2.0</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:2px groove rgb(24, 90, 119);
+border-radius:15px;
+padding:2px 4px;
+background-color: rgb(24, 90, 119);
+color:rgb(255,255,255);
+font: 10pt &quot;Hitmo2.0&quot;;</string>
+               </property>
                <property name="text">
-                <string>Run</string>
+                <string> Run </string>
                </property>
               </widget>
              </item>
@@ -177,6 +335,17 @@
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
               <widget class="QLabel" name="quantumtabtitle">
+               <property name="font">
+                <font>
+                 <family>Hitmo2.0</family>
+                 <pointsize>12</pointsize>
+                 <kerning>false</kerning>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(28, 28, 49);
+font: 12pt &quot;Hitmo2.0&quot;;</string>
+               </property>
                <property name="text">
                 <string>Quantum</string>
                </property>
@@ -197,8 +366,22 @@
              </item>
              <item>
               <widget class="QPushButton" name="quantumbtn">
+               <property name="font">
+                <font>
+                 <family>Hitmo2.0</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border:2px groove rgb(24, 90, 119);
+border-radius:15px;
+padding:2px 4px;
+background-color: rgb(24, 90, 119);
+color:rgb(255,255,255);
+font: 10pt &quot;Hitmo2.0&quot;;</string>
+               </property>
                <property name="text">
-                <string>Run</string>
+                <string> Run </string>
                </property>
               </widget>
              </item>

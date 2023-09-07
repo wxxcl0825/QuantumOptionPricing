@@ -140,16 +140,25 @@ class Ui_MainWindow(object):
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem2)
         self.classicbtn = QtWidgets.QPushButton(self.classic)
+        self.classicbtn.setEnabled(True)
         font = QtGui.QFont()
         font.setFamily("Hitmo2.0")
         font.setPointSize(10)
         self.classicbtn.setFont(font)
-        self.classicbtn.setStyleSheet("border:2px groove rgb(24, 90, 119);\n"
+        self.classicbtn.setStyleSheet("QPushButton{\n"
+"border:2px groove rgb(24, 90, 119);\n"
 "border-radius:15px;\n"
 "padding:2px 4px;\n"
 "background-color: rgb(24, 90, 119);\n"
 "color:rgb(255,255,255);\n"
-"font: 10pt \"Hitmo2.0\";")
+"font: 10pt \"Hitmo2.0\";\n"
+"}\n"
+"\n"
+"QPushButton:disabled{\n"
+"border:2px groove rgb(240, 245, 247);\n"
+"background-color: rgb(240, 245, 247);\n"
+"color: gray;\n"
+"}")
         self.classicbtn.setObjectName("classicbtn")
         self.horizontalLayout_5.addWidget(self.classicbtn)
         self.verticalLayout_5.addLayout(self.horizontalLayout_5)
@@ -183,12 +192,20 @@ class Ui_MainWindow(object):
         font.setFamily("Hitmo2.0")
         font.setPointSize(10)
         self.quantumbtn.setFont(font)
-        self.quantumbtn.setStyleSheet("border:2px groove rgb(24, 90, 119);\n"
+        self.quantumbtn.setStyleSheet("QPushButton{\n"
+"border:2px groove rgb(24, 90, 119);\n"
 "border-radius:15px;\n"
 "padding:2px 4px;\n"
 "background-color: rgb(24, 90, 119);\n"
 "color:rgb(255,255,255);\n"
-"font: 10pt \"Hitmo2.0\";")
+"font: 10pt \"Hitmo2.0\";\n"
+"}\n"
+"\n"
+"QPushButton:disabled{\n"
+"border:2px groove rgb(240, 245, 247);\n"
+"background-color: rgb(240, 245, 247);\n"
+"color: gray;\n"
+"}")
         self.quantumbtn.setObjectName("quantumbtn")
         self.horizontalLayout_6.addWidget(self.quantumbtn)
         self.verticalLayout_6.addLayout(self.horizontalLayout_6)
@@ -197,6 +214,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addLayout(self.quantumlayout)
         self.verticalLayout_6.setStretch(1, 1)
         self.verticalLayout_2.addWidget(self.quantum)
+        self.verticalLayout_2.setStretch(0, 1)
+        self.verticalLayout_2.setStretch(1, 1)
         self.horizontalLayout_4.addLayout(self.verticalLayout_2)
         self.horizontalLayout_4.setStretch(0, 1)
         self.horizontalLayout_4.setStretch(1, 3)
@@ -227,4 +246,4 @@ class Ui_MainWindow(object):
         self.classicbtn.setText(_translate("MainWindow", " Run "))
         self.quantumtabtitle.setText(_translate("MainWindow", "Quantum"))
         self.quantumbtn.setText(_translate("MainWindow", " Run "))
-from assets import assets_rc
+import assets.assets_rc

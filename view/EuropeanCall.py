@@ -54,7 +54,7 @@ class classicwidget(QWidget, Ui_classicwidget):
         self.result.setText(str(np.round(result["result"], eps)))
         self.bsm.setText(str(np.round(result["BSM"], eps)))
         self.bias.setText(f"{np.abs(bias) * 100:.2f}%")
-        self.figure.plot(result["log"][0], result["log"][1])
+        self.figure.plot(result["log"][0], result["log"][1], result["BSM"])
         self.btn.setEnabled(True)
 
 
@@ -72,7 +72,7 @@ class quantumwidget(QWidget, Ui_quantumwidget):
 
 class classicFigure(FigureCanvas):
     def __init__(self):
-        figure = Figure(constrained_layout=True)
+        figure = Figure(tight_layout=True)
         self.axes = figure.add_subplot(111)
         FigureCanvas.__init__(self, figure)
         FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -80,9 +80,12 @@ class classicFigure(FigureCanvas):
         self.axes.set_ylabel("Price")
         FigureCanvas.updateGeometry(self)
 
-    def plot(self, x, y):
+    def plot(self, x, y, baseline):
         self.axes.cla()
-        self.axes.plot(x, y)
+        self.axes.plot(x, y, color="#185a77")
+        self.axes.axhline(baseline, color="#f0f5f7", linestyle="dashed")
+        self.axes.set_xlabel("Samples")
+        self.axes.set_ylabel("Price")
         self.figure.canvas.draw()
         self.figure.canvas.flush_events()
 

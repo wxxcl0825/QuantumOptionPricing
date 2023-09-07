@@ -102,6 +102,11 @@ border-radius: 10px;</string>
        </item>
        <item>
         <widget class="QLabel" name="result">
+         <property name="font">
+          <font>
+           <family>Hitmo2.0</family>
+          </font>
+         </property>
          <property name="text">
           <string/>
          </property>

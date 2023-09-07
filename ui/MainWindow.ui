@@ -243,7 +243,7 @@ QComboBox::drop-down {
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1">
         <item>
          <widget class="QFrame" name="classic">
           <property name="frameShape">
@@ -288,6 +288,9 @@ font: 12pt &quot;Hitmo2.0&quot;;</string>
              </item>
              <item>
               <widget class="QPushButton" name="classicbtn">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="font">
                 <font>
                  <family>Hitmo2.0</family>
@@ -295,12 +298,20 @@ font: 12pt &quot;Hitmo2.0&quot;;</string>
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">border:2px groove rgb(24, 90, 119);
+                <string notr="true">QPushButton{
+border:2px groove rgb(24, 90, 119);
 border-radius:15px;
 padding:2px 4px;
 background-color: rgb(24, 90, 119);
 color:rgb(255,255,255);
-font: 10pt &quot;Hitmo2.0&quot;;</string>
+font: 10pt &quot;Hitmo2.0&quot;;
+}
+
+QPushButton:disabled{
+border:2px groove rgb(240, 245, 247);
+background-color: rgb(240, 245, 247);
+color: gray;
+}</string>
                </property>
                <property name="text">
                 <string> Run </string>
@@ -366,12 +377,20 @@ font: 12pt &quot;Hitmo2.0&quot;;</string>
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">border:2px groove rgb(24, 90, 119);
+                <string notr="true">QPushButton{
+border:2px groove rgb(24, 90, 119);
 border-radius:15px;
 padding:2px 4px;
 background-color: rgb(24, 90, 119);
 color:rgb(255,255,255);
-font: 10pt &quot;Hitmo2.0&quot;;</string>
+font: 10pt &quot;Hitmo2.0&quot;;
+}
+
+QPushButton:disabled{
+border:2px groove rgb(240, 245, 247);
+background-color: rgb(240, 245, 247);
+color: gray;
+}</string>
                </property>
                <property name="text">
                 <string> Run </string>

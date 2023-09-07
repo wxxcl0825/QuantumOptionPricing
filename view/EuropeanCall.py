@@ -109,7 +109,8 @@ class quantumFigure(FigureCanvas):
 
     def plot(self, circuit: QuantumCircuit):
         self.figure = circuit.draw("mpl", style="iqx", fold=-1)
-        self.figure.canvas.flush_events()
+        FigureCanvas.updateGeometry(self)
+
 
 
 class classicThread(QThread):

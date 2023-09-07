@@ -1,6 +1,7 @@
 import time
 
 import matplotlib
+import numpy as np
 from PyQt5.QtCore import QThread, pyqtSignal
 from qiskit import *
 
@@ -25,7 +26,7 @@ class taskwidget(QWidget, Ui_taskwidget):
     def get_data(self):
         s0 = float(self.stockprice.text())
         k = float(self.strikeprice.text())
-        t = float(self.strikeprice.text())
+        t = float(self.maturity.text())
         r = float(self.marketrate.text())
         sigma = float(self.volatility.text())
         eps = float(self.accuracy.text())
@@ -42,13 +43,18 @@ class classicwidget(QWidget, Ui_classicwidget):
 
     def run(self, param: list, btn: QPushButton):
         self.btn = btn
-        s0, k, t, r, sigma, eps = param
         n = int(self.simulations.text())
-        thread = classicThread(self, param)
+        thread = classicThread(self, param + [n])
         thread.finishSignal.connect(self.show_result)
         thread.start()
 
-    def show_result(self, result):
+    def show_result(self, result: dict):
+        eps = result["eps"]
+        bias = (result["result"] - result["BSM"]) / result["BSM"]
+        self.result.setText(str(np.round(result["result"], eps)))
+        self.bsm.setText(str(np.round(result["BSM"], eps)))
+        self.bias.setText(f"{np.abs(bias) * 100:.2f}%")
+        self.figure.plot(result["log"][0], result["log"][1])
         self.btn.setEnabled(True)
 
 
@@ -74,6 +80,12 @@ class classicFigure(FigureCanvas):
         self.axes.set_ylabel("Price")
         FigureCanvas.updateGeometry(self)
 
+    def plot(self, x, y):
+        self.axes.cla()
+        self.axes.plot(x, y)
+        self.figure.canvas.draw()
+        self.figure.canvas.flush_events()
+
 
 class quantumFigure(FigureCanvas):
     def __init__(self):
@@ -84,18 +96,17 @@ class quantumFigure(FigureCanvas):
 
 
 class classicThread(QThread):
-    finishSignal = pyqtSignal(list)
+    finishSignal = pyqtSignal(dict)
 
     def __init__(self, parent, param):
         QThread.__init__(self, parent)
         self.parma = param
 
     def run(self) -> None:
-        time.sleep(2)
         self.finishSignal.emit(EuropeanCall.classic(self.parma))
 
 class quantumThread(QThread):
-    finishSignal = pyqtSignal(list)
+    finishSignal = pyqtSignal(dict)
     def __init__(self, parent, param):
         QThread.__init__(self, parent)
         self.param = param

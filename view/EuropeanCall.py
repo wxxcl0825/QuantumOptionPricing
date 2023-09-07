@@ -67,7 +67,17 @@ class quantumwidget(QWidget, Ui_quantumwidget):
         self.figurelayout.addWidget(self.figure)
 
     def run(self, param: list, btn: QPushButton):
-        pass
+        self.btn = btn
+        nbits = int(self.nbits.text())
+        opt = int(self.optimizer.text())
+        thread = quantumThread(self, param + [nbits, opt])
+        thread.finishSignal.connect(self.show_result)
+        thread.start()
+
+    def show_result(self, result: dict):
+        self.result.setText(f"{result['result']:.4f}")
+        self.figure.plot(result["circuit"])
+        self.btn.setEnabled(True)
 
 
 class classicFigure(FigureCanvas):
@@ -92,10 +102,14 @@ class classicFigure(FigureCanvas):
 
 class quantumFigure(FigureCanvas):
     def __init__(self):
-        figure = QuantumCircuit(1, 0).draw("mpl", style="iqx")
-        FigureCanvas.__init__(self, figure)
+        self.figure = QuantumCircuit(1, 0).draw("mpl", style="iqx")
+        FigureCanvas.__init__(self, self.figure)
         FigureCanvas.setSizePolicy(self, QSizePolicy.Fixed, QSizePolicy.Fixed)
         FigureCanvas.updateGeometry(self)
+
+    def plot(self, circuit: QuantumCircuit):
+        self.figure = circuit.draw("mpl", style="iqx", fold=-1)
+        self.figure.canvas.flush_events()
 
 
 class classicThread(QThread):
@@ -115,5 +129,4 @@ class quantumThread(QThread):
         self.param = param
 
     def run(self) -> None:
-        time.sleep(2)
         self.finishSignal.emit(EuropeanCall.quantum(self.param))

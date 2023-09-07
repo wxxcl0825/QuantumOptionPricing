@@ -1,5 +1,11 @@
 import numpy as np
 from scipy.stats import norm
+from qiskit import QuantumCircuit
+from qiskit import transpile
+from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
+from qiskit.circuit.library import LinearAmplitudeFunction
+from qiskit_aer.primitives import Sampler
+from qiskit_finance.circuit.library import LogNormalDistribution
 
 
 def monte_carlo(N, s0, K, T, r, sigma):
@@ -28,5 +34,60 @@ def classic(param: list) -> dict:
     return res
 
 
-def quantum(param):
-    return {}
+def compile_circuit(circuit, opt):
+    basis_gates = ["h", "ry", "cry", "cx", "ccx",
+                   "p", "cp", "x", "s", "sdg", "y", "t", "cz"]
+    return transpile(circuit, basis_gates=basis_gates, optimization_level=opt)
+
+
+def get_uncertainty_model(nbits, mu, sigma, low, high):
+    return LogNormalDistribution(nbits, mu=mu, sigma=sigma ** 2, bounds=(low, high))
+
+
+def get_european_call_objective(nbits, K, low, high, c):
+    breakpoints = [low, K]
+    slopes = [0, 1]
+    offsets = [0, 0]
+    f_min, f_max = 0, high - K
+    return LinearAmplitudeFunction(
+        nbits, slopes, offsets,
+        domain=(low, high), image=(f_min, f_max),
+        breakpoints=breakpoints, rescaling_factor=c
+    )
+
+
+def quantum_monte_carlo(nbits, S0, sigma, r, T, K, opt, c=0.25, epsilon=0.01, alpha=0.05, nshots=1000):
+    mu = (r - sigma ** 2 / 2) * T + np.log(S0)
+    sigma *= np.sqrt(T)
+    mean = np.exp(mu + sigma ** 2 / 2)
+    var = (np.exp(sigma ** 2) - 1) * np.exp(2 * mu + sigma ** 2)
+    stdvar = np.sqrt(var)
+    low = np.maximum(0, mean - 3 * stdvar)
+    high = mean + 3 * stdvar
+    uncertainty_model = get_uncertainty_model(nbits, mu, sigma, low, high)
+    european_call_objective = get_european_call_objective(
+        nbits, K, low, high, c)
+    num_bits = european_call_objective.num_qubits
+    circ = QuantumCircuit(num_bits)
+    circ.append(uncertainty_model, range(nbits))
+    circ.append(european_call_objective, range(num_bits))
+    problem = EstimationProblem(
+        state_preparation=circ,
+        objective_qubits=[nbits],
+        post_processing=european_call_objective.post_processing)
+    ae = IterativeAmplitudeEstimation(
+        epsilon_target=epsilon, alpha=alpha, sampler=Sampler(
+            run_options={"shots": nshots})
+    )
+    circuit = compile_circuit(ae.construct_circuit(problem, 1, True), opt=opt)
+    result = ae.estimate(problem).estimation_processed * np.exp(-r * T)
+    return [circuit, result]
+
+
+def quantum(param) -> dict:
+    s0, k, t, r, sigma, eps, nbits, opt = param
+    res = {}
+    _res = quantum_monte_carlo(nbits, s0, sigma, r, t, k, opt, epsilon=eps)
+    res["circuit"] = _res[0]
+    res["result"] = _res[1]
+    return res

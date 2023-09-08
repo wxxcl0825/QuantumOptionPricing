@@ -1,0 +1,5 @@
+pyqt5~=5.15.9
+matplotlib~=3.7.2
+numpy~=1.25.2
+qiskit~=0.44.1
+scipy~=1.11.1

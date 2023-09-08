@@ -93,7 +93,7 @@ class classicFigure(FigureCanvas):
     def plot(self, x, y, baseline):
         self.axes.cla()
         self.axes.plot(x, y, color="#185a77")
-        self.axes.axhline(baseline, color="#f0f5f7", linestyle="dashed")
+        self.axes.axhline(baseline, color="grey", linestyle="dashed")
         self.axes.set_xlabel("Samples")
         self.axes.set_ylabel("Price")
         self.figure.canvas.draw()
@@ -108,9 +108,8 @@ class quantumFigure(FigureCanvas):
         FigureCanvas.updateGeometry(self)
 
     def plot(self, circuit: QuantumCircuit):
-        self.figure = circuit.draw("mpl", style="iqx", fold=-1)
+        self.figure = circuit.draw("mpl", style="iqx", fold=-1, scale=2.5 / circuit.num_qubits)
         FigureCanvas.updateGeometry(self)
-
 
 
 class classicThread(QThread):
@@ -123,8 +122,10 @@ class classicThread(QThread):
     def run(self) -> None:
         self.finishSignal.emit(EuropeanCall.classic(self.parma))
 
+
 class quantumThread(QThread):
     finishSignal = pyqtSignal(dict)
+
     def __init__(self, parent, param):
         QThread.__init__(self, parent)
         self.param = param

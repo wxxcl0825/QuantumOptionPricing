@@ -10,16 +10,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
-        # load subview_task
-        self.taskwidget = EuropeanCall.taskwidget()
-        self.tasklayout.addWidget(self.taskwidget)
-        self.taskwidget.show()
-        self.classicwidget = EuropeanCall.classicwidget()
-        self.classiclayout.addWidget(self.classicwidget)
-        self.classicwidget.show()
-        self.quantumwidget = EuropeanCall.quantumwidget()
-        self.quantumlayout.addWidget(self.quantumwidget)
-        self.quantumwidget.show()
+        self.load_europeancall()
+        self.table = {"European Call": self.load_europeancall}
+        self.combo.activated[str].connect(self.switch_option)
+
 
     @pyqtSlot()
     def on_classicbtn_clicked(self):
@@ -30,3 +24,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_quantumbtn_clicked(self):
         self.quantumbtn.setDisabled(True)
         self.quantumwidget.run(self.taskwidget.get_data(), self.quantumbtn)
+
+    def switch_option(self, text):
+        self.taskwidget.close()
+        self.classicwidget.close()
+        self.quantumwidget.close()
+        self.table[text]()
+
+
+    def load_europeancall(self):
+        self.taskwidget = EuropeanCall.taskwidget()
+        self.tasklayout.addWidget(self.taskwidget)
+        self.taskwidget.show()
+        self.classicwidget = EuropeanCall.classicwidget()
+        self.classiclayout.addWidget(self.classicwidget)
+        self.classicwidget.show()
+        self.quantumwidget = EuropeanCall.quantumwidget()
+        self.quantumlayout.addWidget(self.quantumwidget)
+        self.quantumwidget.show()

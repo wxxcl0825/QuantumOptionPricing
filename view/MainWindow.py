@@ -2,7 +2,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
 
 from ui.MainWindow import Ui_MainWindow
-from view import EuropeanCall
+from view import EuropeanCall, EuropeanPut
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -11,7 +11,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
         self.load_europeancall()
-        self.table = {"European Call": self.load_europeancall}
+        self.table = {
+            "European Call": self.load_europeancall,
+            "European Put": self.load_europeanput
+        }
         self.combo.activated[str].connect(self.switch_option)
 
 
@@ -40,5 +43,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.classiclayout.addWidget(self.classicwidget)
         self.classicwidget.show()
         self.quantumwidget = EuropeanCall.quantumwidget()
+        self.quantumlayout.addWidget(self.quantumwidget)
+        self.quantumwidget.show()
+
+    def load_europeanput(self):
+        self.taskwidget = EuropeanPut.taskwidget()
+        self.tasklayout.addWidget(self.taskwidget)
+        self.taskwidget.show()
+        self.classicwidget = EuropeanPut.classicwidget()
+        self.classiclayout.addWidget(self.classicwidget)
+        self.classicwidget.show()
+        self.quantumwidget = EuropeanPut.quantumwidget()
         self.quantumlayout.addWidget(self.quantumwidget)
         self.quantumwidget.show()

@@ -1,4 +1,5 @@
 import matplotlib
+import numpy as np
 from PyQt5.QtCore import QThread, pyqtSignal
 from qiskit import QuantumCircuit
 
@@ -8,7 +9,6 @@ from utils import EuropeanPut
 matplotlib.use("Qt5Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-
 
 from PyQt5.QtWidgets import QWidget, QSizePolicy, QPushButton
 
@@ -31,6 +31,7 @@ class taskwidget(QWidget, Ui_taskwidget):
         eps = float(self.accuracy.text())
         return [s0, k, t, r, sigma, eps]
 
+
 class classicwidget(QWidget, Ui_classicwidget):
     def __init__(self):
         QWidget.__init__(self)
@@ -47,7 +48,14 @@ class classicwidget(QWidget, Ui_classicwidget):
         thread.start()
 
     def show_result(self, result: dict):
+        eps = result["eps"]
+        bias = (result["result"] - result["BSM"]) / result["BSM"]
+        self.result.setText(str(np.round(result["result"], eps)))
+        self.bsm.setText(str(np.round(result["BSM"], eps)))
+        self.bias.setText(f"{np.abs(bias) * 100:.2f}%")
+        self.figure.plot(result["log"][0], result["log"][1], result["BSM"])
         self.btn.setEnabled(True)
+
 
 class quantumwidget(QWidget, Ui_quantumwidget):
     def __init__(self):
@@ -56,6 +64,20 @@ class quantumwidget(QWidget, Ui_quantumwidget):
         self.setupUi(self)
         self.figure = quantumFigure()
         self.figurelayout.addWidget(self.figure)
+
+    def run(self, param: list, btn: QPushButton):
+        self.btn = btn
+        nbits = int(self.nbits.text())
+        opt = int(self.optimizer.text())
+        thread = quantumThread(self, param + [nbits, opt])
+        thread.finishSignal.connect(self.show_result)
+        thread.start()
+
+    def show_result(self, result: dict):
+        self.result.setText(f"{result['result']:.4f}")
+        self.figure.plot(result["circuit"])
+        self.btn.setEnabled(True)
+
 
 class classicFigure(FigureCanvas):
     def __init__(self):
@@ -67,12 +89,27 @@ class classicFigure(FigureCanvas):
         self.axes.set_ylabel("Price")
         FigureCanvas.updateGeometry(self)
 
+    def plot(self, x, y, baseline):
+        self.axes.cla()
+        self.axes.plot(x, y, color="#185a77")
+        self.axes.axhline(baseline, color="grey", linestyle="dashed")
+        self.axes.set_xlabel("Samples")
+        self.axes.set_ylabel("Price")
+        self.figure.canvas.draw()
+        self.figure.canvas.flush_events()
+
+
 class quantumFigure(FigureCanvas):
     def __init__(self):
         self.figure = QuantumCircuit(1, 0).draw("mpl", style="iqx")
         FigureCanvas.__init__(self, self.figure)
         FigureCanvas.setSizePolicy(self, QSizePolicy.Fixed, QSizePolicy.Fixed)
         FigureCanvas.updateGeometry(self)
+
+    def plot(self, circuit: QuantumCircuit):
+        self.figure = circuit.draw("mpl", style="iqx", fold=-1, scale=2.5 / circuit.num_qubits)
+        FigureCanvas.updateGeometry(self)
+
 
 class classicThread(QThread):
     finishSignal = pyqtSignal(dict)
@@ -83,3 +120,14 @@ class classicThread(QThread):
 
     def run(self) -> None:
         self.finishSignal.emit(EuropeanPut.classic(self.parma))
+
+
+class quantumThread(QThread):
+    finishSignal = pyqtSignal(dict)
+
+    def __init__(self, parent, param):
+        QThread.__init__(self, parent)
+        self.param = param
+
+    def run(self) -> None:
+        self.finishSignal.emit(EuropeanPut.quantum(self.param))
